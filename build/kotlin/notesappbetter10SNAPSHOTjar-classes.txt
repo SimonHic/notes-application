@@ -1,1 +1,1 @@
-C:\Users\hicsi\Downloads\notes-app-better\build\classes\kotlin\main\MainKt.class
+C:\Users\hicsi\Downloads\notes-app-better\build\classes\kotlin\main\MainKt.class;C:\Users\hicsi\Downloads\notes-app-better\build\classes\kotlin\main\utils\ScannerInput.class
