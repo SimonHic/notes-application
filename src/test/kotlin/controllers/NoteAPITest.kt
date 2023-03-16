@@ -2,14 +2,14 @@ package controllers
 
 import models.Note
 import org.junit.jupiter.api.AfterEach
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
-import kotlin.test.assertTrue
-
-//Changed Note priority to a String instead of Int because the mismatch exception didn't work
 
 class NoteAPITest {
+
     private var learnKotlin: Note? = null
     private var summerHoliday: Note? = null
     private var codeApp: Note? = null
@@ -21,10 +21,10 @@ class NoteAPITest {
     @BeforeEach
     fun setup(){
         learnKotlin = Note("Learning Kotlin", 5, "College", false)
-        summerHoliday = Note("Summer Holiday to France",1,"Holiday", false)
+        summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
         codeApp = Note("Code App", 4, "Work", false)
         testApp = Note("Test App", 4, "Work", false)
-        swim = Note("Swim - Pool", 3, "Work", false)
+        swim = Note("Swim - Pool", 3, "Hobby", false)
 
         //adding 5 Note to the notes api
         populatedNotes!!.add(learnKotlin!!)
@@ -45,22 +45,46 @@ class NoteAPITest {
         emptyNotes = null
     }
 
-    @Test
-    fun `adding a Note to a populated list adds to ArrayList`(){
-        val newNote = Note("Study Lambdas", 1, "College", false)
-        assertEquals(5, populatedNotes!!.numberOfNotes())
-        assertTrue(populatedNotes!!.add(newNote))
-        assertEquals(6, populatedNotes!!.numberOfNotes())
-        assertEquals(newNote, populatedNotes!!.findNote(populatedNotes!!.numberOfNotes() - 1))
+    @Nested
+    inner class AddNotes {
+        @Test
+        fun `adding a Note to a populated list adds to ArrayList`() {
+            val newNote = Note("Study Lambdas", 1, "College", false)
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            assertTrue(populatedNotes!!.add(newNote))
+            assertEquals(6, populatedNotes!!.numberOfNotes())
+            assertEquals(newNote, populatedNotes!!.findNote(populatedNotes!!.numberOfNotes() - 1))
+        }
+
+        @Test
+        fun `adding a Note to an empty list adds to ArrayList`() {
+            val newNote = Note("Study Lambdas", 1, "College", false)
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.add(newNote))
+            assertEquals(1, emptyNotes!!.numberOfNotes())
+            assertEquals(newNote, emptyNotes!!.findNote(emptyNotes!!.numberOfNotes() - 1))
+        }
     }
 
-    @Test
-    fun `adding a Note to an empty list adds to ArrayList`(){
-        val newNote = Note("Study Lambdas", 1, "College", false)
-        assertEquals(0, emptyNotes!!.numberOfNotes())
-        assertTrue(emptyNotes!!.add(newNote))
-        assertEquals(1, emptyNotes!!.numberOfNotes())
-        assertEquals(newNote, emptyNotes!!.findNote(emptyNotes!!.numberOfNotes() - 1))
+    @Nested
+    inner class ListNotes {
+
+        @Test
+        fun `listAllNotes returns No Notes Stored message when ArrayList is empty`() {
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+            assertTrue(emptyNotes!!.listAllNotes().lowercase().contains("no notes"))
+        }
+
+        @Test
+        fun `listAllNotes returns Notes when ArrayList has notes stored`() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            val notesString = populatedNotes!!.listAllNotes().lowercase()
+            assertTrue(notesString.contains("learning kotlin"))
+            assertTrue(notesString.contains("code app"))
+            assertTrue(notesString.contains("test app"))
+            assertTrue(notesString.contains("swim"))
+            assertTrue(notesString.contains("summer holiday"))
+        }
     }
 
 }
