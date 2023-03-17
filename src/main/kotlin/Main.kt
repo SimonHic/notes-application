@@ -9,11 +9,9 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 private val noteAPI = NoteAPI()
 
-//Left off at Pull and Merge 05 notes app 07
-
-    fun main(args: Array<String>) {
-        runMenu()
-    }
+fun main(args: Array<String>) {
+    runMenu()
+}
 
 fun mainMenu() : Int {
     return ScannerInput.readNextInt(""" 
@@ -31,63 +29,48 @@ fun mainMenu() : Int {
          > ==>> """.trimMargin(">"))
 }
 
-    fun addNote(){
-         //logger.info { "addNote() function invoked" }
-        val noteTitle = readNextLine("Enter a title for the note: ")
-        val notePriority = readNextInt("Enter a priority (1-low), 2, 3, 4, 5-high: ")
-        val noteCategory = readNextLine("Enter a category for the note: ")
-        val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
-
-        if (isAdded) {
-            println("Added Successfully")
-        } else {
-            println("Add Failed")
+fun runMenu() {
+    do {
+        val option = mainMenu()
+        when (option) {
+            1  -> addNote()
+            2  -> listNotes()
+            3  -> updateNote()
+            4  -> deleteNote()
+            0  -> exitApp()
+            else -> println("Invalid option entered: ${option}")
         }
+    } while (true)
+}
+
+fun addNote(){
+    //logger.info { "addNote() function invoked" }
+    val noteTitle = readNextLine("Enter a title for the note: ")
+    val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
+    val noteCategory = readNextLine("Enter a category for the note: ")
+    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+
+    if (isAdded) {
+        println("Added Successfully")
+    } else {
+        println("Add Failed")
     }
+}
 
-    fun listNotes(){
-        //logger.info { "listNotes() function invoked" }
-        println(noteAPI.listAllNotes())
-    }
+fun listNotes(){
+    //logger.info { "listNotes() function invoked" }
+    println(noteAPI.listAllNotes())
+}
 
-    fun listActiveNotes() {
-        //logger.info { "listActiveNotes() function invoked" }
-        println(noteAPI.listActiveNotes())
-    }
+fun updateNote(){
+    logger.info { "updateNote() function invoked" }
+}
 
-    fun listArchivedNotes() {
-        //logger.info { "listActiveNotes() function invoked" }
-        println(noteAPI.listArchivedNotes())
-    }
+fun deleteNote(){
+    logger.info { "deleteNote() function invoked" }
+}
 
-    fun updateNote(){
-        logger.info { "updateNote() function invoked" }
-
-    }
-
-    fun deleteNote(){
-        logger.info { "deleteNote() function invoked" }
-
-    }
-
-    fun exitApp(){
-        println("Exiting...bye")
-        exit(0)
-    }
-
-    fun runMenu() {
-        do {
-            val option = mainMenu()
-            when (option) {
-                1  -> addNote()
-                2  -> listNotes()
-                3  -> updateNote()
-                4  -> deleteNote()
-                5  -> listActiveNotes()
-                6  -> listArchivedNotes()
-                0  -> exitApp()
-                else -> println("Invalid option entered: ${option}")
-
-            }
-        } while (true)
-    }
+fun exitApp(){
+    logger.info { "exitApp() function invoked" }
+    exit(0)
+}
