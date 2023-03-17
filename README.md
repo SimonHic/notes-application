@@ -9,6 +9,7 @@ This Notes App allows you to:
 + Create notes
 + List existing notes
 + Delete notes
++ JUnit testing
 
 All via the terminal.
 ____________________________________________________________________________
