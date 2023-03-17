@@ -49,15 +49,61 @@ class NoteAPI {
         }
     }
 
-    fun numberOfActiveNotes(): Int {
-        return notes.count { !it.isNoteArchived }
+    fun listNotesBySelectedPriority(priority: Int): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+                if (notes[i].notePriority == priority) {
+                    listOfNotes +=
+                        """$i: ${notes[i]}
+                        """.trimIndent()
+                }
+            }
+            if (listOfNotes.equals("")) {
+                "No notes with priority: $priority"
+            } else {
+                "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
+            }
+        }
+    }
+
+    fun numberOfNotes(): Int {
+        return notes.size
     }
 
     fun numberOfArchivedNotes(): Int {
-        return notes.count { it.isNoteArchived }
+        //return notes.stream().filter { obj: Note -> obj.isNoteArchived }.count().toInt()
+        var counter = 0
+        for (note in notes) {
+            if (note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
     }
-    fun numberOfNotes(): Int {
-        return notes.size
+
+    fun numberOfActiveNotes(): Int {
+        //return notes.stream().filter { p: Note -> !p.isNoteArchived }.count().toInt()
+        var counter = 0
+        for (note in notes) {
+            if (!note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
+    }
+
+    fun numberOfNotesByPriority(priority: Int): Int {
+        //return notes.stream().filter { p: Note -> p.notePriority == priority }.count().toInt()
+        var counter = 0
+        for (note in notes) {
+            if (note.notePriority == priority) {
+                counter++
+            }
+        }
+        return counter
     }
 
     fun findNote(index: Int): Note? {
@@ -70,5 +116,4 @@ class NoteAPI {
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
-
 }
