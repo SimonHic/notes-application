@@ -9,6 +9,7 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 private val noteAPI = NoteAPI()
 
+//Left off at Pull and Merge 05 notes app 07
 
     fun main(args: Array<String>) {
         runMenu()
