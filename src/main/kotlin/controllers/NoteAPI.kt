@@ -20,6 +20,8 @@ class NoteAPI {
             listOfNotes
         }
     }
+
+
     fun numberOfNotes(): Int {
         return notes.size
     }
