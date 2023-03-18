@@ -319,4 +319,33 @@ class NoteAPITest {
 
     }
 
+    /**Test for Archiving a Note include:
+     * Return false if a note doesn't exist in the first place
+     * Return false if a note is already archived to begin with
+     * Return true if there is a note that exists and meets the requirements to be archived (Isn't already archived and exists)
+     * */
+    @Nested
+    inner class ArchiveNotes {
+        @Test
+        fun `archiving a note that does not exist returns false`(){
+            assertFalse(populatedNotes!!.archiveNote(6))
+            assertFalse(populatedNotes!!.archiveNote(-1))
+            assertFalse(emptyNotes!!.archiveNote(0))
+        }
+
+        @Test
+        fun `archiving an already archived note returns false`(){
+            assertTrue(populatedNotes!!.findNote(2)!!.isNoteArchived)
+            assertFalse(populatedNotes!!.archiveNote(2))
+        }
+
+        @Test
+        fun `archiving an active note that exists returns true and archives`() {
+            assertFalse(populatedNotes!!.findNote(1)!!.isNoteArchived)
+            assertTrue(populatedNotes!!.archiveNote(1))
+            assertTrue(populatedNotes!!.findNote(1)!!.isNoteArchived)
+        }
+    }
+
+
 }
