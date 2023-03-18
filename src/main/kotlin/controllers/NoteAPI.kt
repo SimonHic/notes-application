@@ -20,17 +20,18 @@ class NoteAPI(serializerType: Serializer) {
 
     fun listActiveNotes(): String =
         if (numberOfActiveNotes() == 0) "No active notes found"
-        else listSetConfiguration(notes.filter {note -> !note.isNoteArchived})
+        else formatListString(notes.filter {note -> !note.isNoteArchived})
 
     /**Repetitive code assigned to a simple function that can be called throughout all the listing functions*/
-    fun listSetConfiguration(notesToFormat: List<Note>): String =
-        notesToFormat.joinToString(separator = "\n") { note ->
-            notes.indexOf(note).toString() + ": " + note.toString()
-        }
+    private fun formatListString(notesToFormat: List<Note>): String =
+        notesToFormat
+            .joinToString(separator = "\n") { note ->
+                notes.indexOf(note).toString() + ": " + note.toString()
+            }
 
     fun listArchivedNotes(): String =
         if (numberOfArchivedNotes() == 0) "No archived notes found"
-        else listSetConfiguration(notes.filter { note -> note.isNoteArchived })
+        else formatListString(notes.filter { note -> note.isNoteArchived })
 
     fun listNotesBySelectedPriority(priority: Int): String {
         return if (notes.isEmpty()) {
@@ -84,6 +85,9 @@ class NoteAPI(serializerType: Serializer) {
             notes[index]
         } else null
     }
+
+    fun searchByTitle(searchString: String) =
+        formatListString(notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true) })
 
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {
