@@ -32,19 +32,15 @@ class NoteAPI(serializerType: Serializer) {
         }
     }
 
-    fun listArchivedNotes(): String {
-        return if (numberOfArchivedNotes() == 0) {
-            "No archived notes stored"
-        } else {
-            var listOfArchivedNotes = ""
-            for (note in notes) {
-                if (note.isNoteArchived) {
-                    listOfArchivedNotes += "${notes.indexOf(note)}: $note \n"
-                }
-            }
-            listOfArchivedNotes
+    /**Repetitive code assigned to a simple function that can be called throughout all the listing functions*/
+    fun listSetConfiguration(notesToFormat: List<Note>): String =
+        notesToFormat.joinToString(separator = "\n") { note ->
+            notes.indexOf(note).toString() + ": " + note.toString()
         }
-    }
+
+    fun listArchivedNotes(): String =
+        if (numberOfArchivedNotes() == 0) "No archived notes stored"
+        else listSetConfiguration(notes.filter { note -> note.isNoteArchived })
 
     fun listNotesBySelectedPriority(priority: Int): String {
         return if (notes.isEmpty()) {
