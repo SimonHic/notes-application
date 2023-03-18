@@ -11,7 +11,7 @@ import java.lang.System.exit
 
 private val logger = KotlinLogging.logger {}
 
-/**Uncomment and Comment to alternate between the two*/
+/**Uncomment and Comment to alternate between the two */
 //private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
 private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
 
