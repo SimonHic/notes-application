@@ -76,37 +76,27 @@ class NoteAPI(serializerType: Serializer) {
         return notes.size
     }
 
+    /**Filter the notes that are archived then count them, then output them as an amount / number (aka Int)*/
     fun numberOfArchivedNotes(): Int {
-        //return notes.stream().filter { obj: Note -> obj.isNoteArchived }.count().toInt()
-        var counter = 0
-        for (note in notes) {
-            if (note.isNoteArchived) {
-                counter++
-            }
-        }
-        return counter
+        return notes.stream()
+            .filter{note: Note -> note.isNoteArchived} //Counting all notes that ARE archived
+            .count().toInt()
     }
 
+    /**Filter the notes then count them, then output them as an amount / number (aka Int)*/
     fun numberOfActiveNotes(): Int {
-        //return notes.stream().filter { p: Note -> !p.isNoteArchived }.count().toInt()
-        var counter = 0
-        for (note in notes) {
-            if (!note.isNoteArchived) {
-                counter++
-            }
-        }
-        return counter
+        return notes.stream()
+            .filter{note: Note -> !note.isNoteArchived}  //Counting all notes that ARE NOT archived
+            .count()
+            .toInt()
     }
 
+    /**Filter the notes by priority then count them, then output them as an amount / number (aka Int)*/
     fun numberOfNotesByPriority(priority: Int): Int {
-        //return notes.stream().filter { p: Note -> p.notePriority == priority }.count().toInt()
-        var counter = 0
-        for (note in notes) {
-            if (note.notePriority == priority) {
-                counter++
-            }
-        }
-        return counter
+        return notes.stream()
+            .filter{p: Note -> p.notePriority == priority} //Takes in Note object 'p' and checks if it's equal to the specified priority
+            .count()
+            .toInt()
     }
 
     fun findNote(index: Int): Note? {
@@ -146,7 +136,6 @@ class NoteAPI(serializerType: Serializer) {
         }
         return false
     }
-
 
     //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
