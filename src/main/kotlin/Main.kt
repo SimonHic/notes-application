@@ -12,8 +12,8 @@ import java.lang.System.exit
 private val logger = KotlinLogging.logger {}
 
 /**Uncomment and Comment to alternate between the two*/
-//private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
-private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
+private val noteAPI = NoteAPI(XMLSerializer(File("notes.xml")))
+//private val noteAPI = NoteAPI(JSONSerializer(File("notes.json")))
 
 
 
@@ -30,6 +30,7 @@ fun runMenu() {
             3 -> updateNote()
             4 -> deleteNote()
             5 -> archiveNote()
+            6 -> searchForNote()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -42,18 +43,19 @@ fun mainMenu(): Int {
     return readNextInt(
         """ 
          > ----------------------------------
-         > |        NOTE KEEPER APP         |
+         > |        NOTE KEEPER APP          |
          > ----------------------------------
-         > | NOTE MENU                      |
-         > |   1) Add a note                |
-         > |   2) List all notes            |
-         > |   3) Update a note             |
-         > |   4) Delete a note             |
-         > |   5) Archive a note            |
+         > |  NOTE MENU                      |
+         > |   1.) Add a note                |
+         > |   2.) List all notes            |
+         > |   3.) Update a note             |
+         > |   4.) Delete a note             |
+         > |   5.) Archive a note            |
+         > |   6.) Search for a note         |
          > ----------------------------------
-         > |   20) Save notes               |
-         > |   21) Load notes               |
-         > |   0) Exit                      |
+         > |   20.) Save notes               |
+         > |   21.) Load notes               |
+         > |   0.) Exit                      |
          > ----------------------------------
          > ==>> """.trimMargin(">")
     )
@@ -162,6 +164,15 @@ fun listArchivedNotes() {
     println(noteAPI.listArchivedNotes())
 }
 
+fun searchForNote() {
+    val searchTitle = readNextLine("Please enter the details you want to look for: ")
+    val searchResults = noteAPI.searchByTitle(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("Sorry, no notes with those details were found!")
+    } else {
+        println(searchResults)
+    }
+}
 
 fun save() {
     try {
