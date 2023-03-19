@@ -35,8 +35,8 @@ class NoteAPI(serializerType: Serializer) {
         if (notes.isEmpty()) "No notes stored"
         else {
             val listOfNotes = formatListString(notes.filter{ note -> note.notePriority == priority})
-            if (listOfNotes.equals("")) "No notes with priority: $priority"
-            else "${numberOfNotesByPriority(priority)} notes with priority $priority: $listOfNotes"
+            if (listOfNotes == "") "No notes with priority: $priority \n"
+            else "${numberOfNotesByPriority(priority)} notes with priority $priority: \n $listOfNotes"
         }
 
     /**Returns an Int of the amount of notes stored in the ArrayList*/
@@ -96,12 +96,12 @@ class NoteAPI(serializerType: Serializer) {
     }
 
     //utility method to determine if an index is valid in a list.
-    fun isValidListIndex(index: Int, list: List<Any>): Boolean {
+    private fun isValidListIndex(index: Int, list: List<Any>): Boolean {
         return (index >= 0 && index < list.size)
     }
 
     fun isValidIndex(index: Int) :Boolean{
-        return isValidListIndex(index, notes);
+        return isValidListIndex(index, notes)
     }
 
     @Throws(Exception::class)

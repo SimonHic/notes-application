@@ -30,6 +30,7 @@ fun runMenu() {
             4 -> deleteNote()
             5 -> archiveNote()
             6 -> searchForNote()
+            7 -> numNotesByPriority()
             20 -> save()
             21 -> load()
             0 -> exitApp()
@@ -52,6 +53,7 @@ fun mainMenu(): Int {
                  > @|yellow |   4.) Delete a note             |@
                  > @|green |   5.) Archive a note            |@
                  > @|blue |   6.) Search for a note         |@
+                 > @|blue |   7.) Sort By Most Important         |@
                  > @|cyan ----------------------------------|@
                  > @|magenta |   20.) Save notes               |@
                  > @|magenta |   21.) Load notes               |@
@@ -184,6 +186,10 @@ fun searchForNote() {
     } else {
         println(searchResults)
     }
+}
+
+fun numNotesByPriority() {
+    println(noteAPI.listNotesBySelectedPriority(5)) // Max priority is = 5, so it is the most important
 }
 
 fun save() {
