@@ -39,7 +39,7 @@ object ScannerInput {
      * Read a double from the user.  If the entered data isn't actually a double,
      * the user is prompted again to enter the double.
      *
-     * @param prompt  The information printed to the console for the user to read
+     * @param prompt The information printed to the console for the user to read
      * @return The number read from the user and verified as a double.
      */
     @JvmStatic
