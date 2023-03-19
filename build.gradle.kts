@@ -19,8 +19,11 @@ dependencies {
     implementation("org.slf4j:slf4j-simple:2.0.5")
     // Dependencies for Persistence
     // For Streaming to XML and JSON
-    implementation("com.thoughtworks.xstream:xstream:1.4.18")
-    implementation("org.codehaus.jettison:jettison:1.4.1")
+    implementation("com.thoughtworks.xstream:xstream:1.4.20")
+    implementation("org.codehaus.jettison:jettison:1.5.4")
+    //Color for the UX
+    implementation("org.fusesource.jansi:jansi:2.4.0")
+
 }
 
 tasks.test {
